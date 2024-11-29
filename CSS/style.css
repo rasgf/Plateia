@@ -5,6 +5,7 @@ body {
   background-color: #f0f8ff;
   color: #333;
 }
+
 html, body {
   height: 100%;
 }
@@ -17,16 +18,12 @@ a {
   color: #fff;
 }
 
-h1,
-h2 {
+h1, h2 {
   color: #14213d;
 }
 
 #header-menu > a > img {
   width: 120px;
-  height: auto; /* Mantém a proporção original */
-  max-width: 100%; /* Garante que não ultrapasse o container */
-  object-fit: contain; /* Mantém a proporção da imagem */
 }
 
 #header-menu {
@@ -51,6 +48,10 @@ h2 {
   color: #ffb703;
 }
 
+#text1 {
+  gap: 20px;
+}
+
 #main {
   display: flex;
   flex-direction: column;
@@ -60,6 +61,7 @@ h2 {
   margin: 20;
   background-color: #e0f7fa;
   text-align: center;
+  gap: 20px;
 }
 
 #main .saiba-mais button {
@@ -79,10 +81,10 @@ h2 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: auto auto auto;
-  grid-template-areas:
-    ". . temas"
-    ". ambiente ."
-    "confiança . . ";
+  grid-template-areas: 
+      ". . temas"
+      ". ambiente ."
+      "confiança . .";
   gap: 40px;
   padding: 50px;
   background-color: #f0f8ff;
@@ -107,46 +109,48 @@ h2 {
   grid-area: confiança;
 }
 
-/* Adicione o seguinte trecho ao seu CSS (style.css ou responsive.css) */
-
-#contato form {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f0f8ff;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-#contato label {
-  display: block;
-  margin-bottom: 10px;
-}
-
-#contato input, #contato textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-#contato.button {
+#contato {
+  padding: 50px;
+  background-color: #e0f7fa;
+  color: #fff;
   text-align: center;
 }
 
-#contato button[type="submit"] {
-  background-color: #006d77;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+#contato h2 {
+  padding: 20px;
 }
 
-#contato button[type="submit"]:hover {
-  background-color: #007f88;
+#form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+#form input, #form textarea {
+  padding: 10px;
+  border: 1px solid #999999;
+  border-radius: 5px;
+  background-color: #f0f8ff;
+  color: #333;
+}
+
+#form label {
+  color: #14213d;
+}
+
+#form button {
+  padding: 10px 20px;
+  background-color: #ffb703;
+  color: #14213d;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#form button:hover {
+  background-color: #ffa600;
 }
 
 #footer {
@@ -159,21 +163,31 @@ h2 {
   color: #ffffff;
 }
 
-#footer p{
-font-size: 15x;
-margin-bottom: 0;
+#footer p {
+  font-size: 15px;
+  margin-bottom: 0;
 }
 
 .footer-logos img {
-margin: 10px 10px;
+  margin: 10px 10px;
+}
+
+.footer-logos img:hover {
+  background-color: #007f88;
+}
+.img-2 {
+  height: 45px;
+  align-items: center;
+  margin-top: -2px;
+  margin-left: 2px;
 }
 
 .carousel {
   position: relative;
-  height: 300px;
+  min-height: 500px; 
   width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 1200px; 
+  margin: 0 auto; 
   overflow: hidden;
 }
 
@@ -189,11 +203,12 @@ margin: 10px 10px;
   max-width: 100%;
 }
 
-.carousel img {
+.carousel-inner img {
   width: 100%;
-  height: auto;
-  object-fit: cover;
+  height: 100%; 
+  object-fit: cover; 
   display: block;
+  border-radius: 10px; 
 }
 
 .carousel-control {
@@ -215,43 +230,79 @@ margin: 10px 10px;
   right: 10px;
 }
 
+#nova {
+  color: #333;
+}
+
+#nova:hover {
+  color: #007f88;
+}
+
+.copyright {
+  display: flex;
+  justify-content: center;
+}
+
+#link-copy {
+  color: white;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-weight: 700;
+}
+
+#link-copy:hover {
+  color: #ffa600;
+}
+
 .tooltip #logo img {
   width: 120px;
   height: auto;
   max-width: 100%;
   object-fit: contain;
 }
+
 .tooltip {
   position: relative;
   display: inline-block;
-  cursor: help; /* Indica que há informação adicional */
+  cursor: pointer;
 }
 
 .tooltip .tooltiptext {
   visibility: hidden;
-  width: 140px;
-  background-color: #333;
-  color: #fff;
+  width: 160px; /* Ligeiramente maior */
+  background-color: rgba(0, 0, 0, 0.8); /* Fundo mais elegante e translúcido */
+  color: #ffffff; /* Texto branco */
+  font-size: 14px;
+  font-weight: 500;
   text-align: center;
-  border-radius: 5px;
-  padding: 5px;
+  border-radius: 8px; /* Bordas mais arredondadas */
+  padding: 8px;
   position: absolute;
-  z-index: 100; /* Aumentei o z-index */
-  bottom: -50%; /* Ajustei para aparecer abaixo da logo */
+  z-index: 100;
+  bottom: -35px; /* Ajuste para tooltip abaixo */
   left: 50%;
-  transform: translateX(-50%); /* Centraliza melhor */
+  transform: translateX(-50%);
   opacity: 0;
-  transition: opacity 0.3s, visibility 0.3s;
+  transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra suave */
 }
+
 
 .tooltip:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
+  transform: translateX(-50%) translateY(-10px); /* Elevação leve */
+  background-color: #1d3557; /* Azul escuro elegante */
 }
 
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
+.tooltipimg {
+  transition: transform 0.4s ease, filter 0.4s ease, box-shadow 0.4s ease;
+  border-radius: 10px; /* Bordas suaves para a imagem */
 }
 
+.tooltipimg:hover {
+  transform: scale(1.15); /* Aumenta mais levemente (15%) */
+  filter: brightness(1.2) saturate(1.3); /* Mais brilho e cor vibrante */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Sombra elegante */
+}
 

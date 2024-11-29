@@ -1,41 +1,32 @@
-/* style.css e reset.css permanecem inalterados */
-
-/* responsive.css com alterações */
 @media screen and (max-width: 768px) {
     #header-menu {
         flex-direction: column;
         padding: 10px;
     }
-
     #header-menu ul {
-        display: none; /* Esconde o menu original */
+        display: none; 
         flex-direction: column;
         width: 100%;
         text-align: center;
     }
-
     #header-menu ul.active {
         display: flex;
     }
 
-    /* Menu Hambúrguer (mantido visível no mobile) */
-   .hamburger-menu {
-        display: block; /* Mantém visível no mobile */
+    .hamburger-menu {
+        display: block;
         cursor: pointer;
         position: absolute;
         top: 15px;
         right: 15px;
     }
-
-   .hamburger-menu div {
+    .hamburger-menu div {
         width: 25px;
         height: 3px;
         background-color: white;
         margin: 5px 0;
         transition: 0.4s;
     }
-    
-
     #conteudo {
         grid-template-columns: 1fr;
         grid-template-areas: 
@@ -43,8 +34,7 @@
             "ambiente"
             "confiança";
     }
-
-   .carousel {
+    .carousel {
         max-width: 100%;
     }
 }
@@ -53,59 +43,32 @@
     #header-menu {
         padding: 10px 15px;
     }
-
     #header-menu ul {
         gap: 15px;
         font-size: 20px;
     }
-
     #conteudo {
         grid-template-columns: repeat(2, 1fr);
-        grid-template-areas:
+        grid-template-areas: 
             "temas ambiente"
-            "confiança.";
+            "confiança .";
     }
 }
 
-.carousel-inner img {
-    width: 100%; /* Faça a imagem ocupar a largura total do carrossel */
-    height: auto; /* Mantenha a proporção da imagem */
-    object-fit: cover; /* Faça a imagem cobrir o espaço, mantendo a proporção */
-    border-radius: 10px; /* Adicione um pouco de arredondamento nas bordas (opcional) */
-  }
-
-/* Adicionei uma animação suave para o tooltip */
-.tooltip.tooltiptext {
-    transition: opacity 0.3s ease;
-}
-
-.tooltip:hover.tooltiptext {
-    opacity: 1;
-    transition: opacity 0.3s ease;
-}
-
-/* Animação suave para o menu hambúrguer */
-.hamburger-menu {
-    transition: transform 0.3s ease;
-}
-
-.hamburger-menu div {
-    transition: transform 0.3s ease;
-}
-
-.hamburger-menu.active {
-    transform: rotate(45deg);
-}
-
-.hamburger-menu.active div {
-    transform: rotate(90deg);
-}
-
-/* Novo trecho para manter o menu hambúrguer visível em telas menores */
 @media screen and (max-width: 480px) {
-   .hamburger-menu {
-        display: block; /* Mantém visível em telas menores */
-        top: 10px; /* Ajusta a posição para telas menores */
-        right: 10px; /* Ajusta a posição para telas menores */
+    .hamburger-menu {
+        display: block;
+        top: 10px; 
+        right: 10px; 
     }
 }
+
+@media screen and (min-width: 1025px) {
+    .carousel {
+        min-height: 500px; 
+    }
+    .carousel-inner img {
+        height: 500px; 
+    }
+}
+
