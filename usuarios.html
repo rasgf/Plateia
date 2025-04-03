@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Usuários - Plateia</title>
+    <link rel="stylesheet" href="CSS/style.css" />
+    <link rel="stylesheet" href="CSS/reset.css" />
+    <link rel="stylesheet" href="CSS/responsive.css">
+    <style>
+        .usuarios-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .usuarios-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .user-info {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #e9e9e9;
+            border-radius: 5px;
+        }
+        
+        .logout-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .logout-btn:hover {
+            background-color: #d32f2f;
+        }
+        
+        .usuarios-lista {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .usuarios-lista li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .usuarios-lista li:last-child {
+            border-bottom: none;
+        }
+        
+        .login-required {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .login-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        
+        .login-link:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header id="header-menu">
+        <div class="tooltip">
+            <a href="index.html" id="logo">
+                <img src="IMG/Logo.png" alt="Logo Plateia" />
+            </a>
+            <span class="tooltiptext">Criada pelo Vitinho</span>
+        </div>
+        <div class="hamburger-menu" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">Sobre</a></li>
+            <li><a href="contato.html">Contato</a></li>
+            <li><a href="login.html"><img class="img-2" src="IMG/perfil-de-usuario.png" alt="Perfil"></a></li>
+        </ul>
+    </header>
+
+    <div class="usuarios-container">
+        <div id="login-required" class="login-required">
+            <h2>Acesso Restrito</h2>
+            <p>Você precisa estar logado para ver a lista de usuários.</p>
+            <a href="login.html" class="login-link">Fazer Login</a>
+        </div>
+        
+        <div id="usuarios-content" style="display: none;">
+            <div id="user-info" class="user-info">
+                <h3>Bem-vindo, <span id="nome-usuario"></span>!</h3>
+                <button class="logout-btn" onclick="fazerLogout()">Sair</button>
+            </div>
+            
+            <h2>Lista de Usuários</h2>
+            <ul id="usuarios-lista" class="usuarios-lista">
+                <!-- A lista de usuários será carregada aqui -->
+            </ul>
+        </div>
+    </div>
+
+    <footer id="footer">
+        <div class="footer-logos">
+            <div class="tooltip">
+                <a href="">
+                    <img class="tooltipimg" src="IMG/icons8-whatsapp-48 (1).png" alt="">
+                </a>
+                <span class="tooltiptext">Whatsapp</span>
+            </div>
+            <div class="tooltip">
+                <a href="">
+                    <img class="tooltipimg" src="IMG/icons8-instagram-48 (1).png" alt="">
+                    <span class="tooltiptext">Instagram</span>
+                </a>
+            </div>
+            <div class="tooltip">
+                <a href="">
+                    <img class="tooltipimg" src="IMG/icons8-facebook-48.png" alt="">
+                    <span class="tooltiptext">Facebook</span>
+                </a>
+            </div>
+            <div class="tooltip">
+                <a href="">
+                    <img class="tooltipimg" src="IMG/icons8-linkedin-48 (1).png" alt="">
+                    <span class="tooltiptext">Linkedin</span>
+                </a>
+            </div>
+            <div class="tooltip">
+                <a href="">
+                    <img class="tooltipimg" src="IMG/icons8-github-48.png" alt="">
+                    <span class="tooltiptext">Github</span>
+                </a>
+            </div>
+        </div>
+        <div id="copy">
+            <p class="copyright">Copyright © 2024 <a id="link-copy" href="pages/about.html"> Plateia </a> - Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="assets/auth.js"></script>
+    <script>
+        window.onload = function() {
+            var usuarioLogado = localStorage.getItem('usuario');
+            if (usuarioLogado) {
+                var usuario = JSON.parse(usuarioLogado);
+                document.getElementById('login-required').style.display = 'none';
+                document.getElementById('usuarios-content').style.display = 'block';
+                document.getElementById('nome-usuario').textContent = usuario.nome;
+                
+                carregarUsuarios();
+            }
+        };
+
+        function carregarUsuarios() {
+            var listaUsuarios = document.getElementById('usuarios-lista');
+            listaUsuarios.innerHTML = '';
+            
+            for (var i = 0; i < window.usuarios.length; i++) {
+                var usuario = window.usuarios[i];
+                var li = document.createElement('li');
+                li.textContent = usuario.nome + ' (' + usuario.email + ')';
+                listaUsuarios.appendChild(li);
+            }
+        }
+
+        function fazerLogout() {
+            localStorage.removeItem('usuario');
+            window.location.href = 'login.html';
+        }
+
+        function toggleMenu() {
+            var navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+</body>
+</html> 

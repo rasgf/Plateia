@@ -6,122 +6,59 @@
     <title>Plateia - Pratique sua Oratória</title>
     <link rel="stylesheet" href="CSS/style.css" />
     <link rel="stylesheet" href="CSS/reset.css" />
-    <link rel="stylesheet" href="CSS/responsive.css">  
+    <link rel="stylesheet" href="CSS/responsive.css" />
   </head>
   <body>
     <header id="header-menu">
       <div class="tooltip">
         <a href="index.html" id="logo">
-            <img src="IMG/Logo.png" alt="Logo Plateia" />
+          <img src="IMG/Logo.png" alt="Logo Plateia" />
         </a>
         <span class="tooltiptext">Criada pelo Vitinho</span>
-    </div>
-    <div class="hamburger-menu" onclick="toggleMenu()">
-      <div></div>
-      <div></div>
-      <div></div>
-  </div>
-  <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="#">Sobre</a></li>
-      <li><a href="contato.html">Contato</a></li>
-      <li><a href="#"><img class="img-2" src="IMG/perfil-de-usuario.png" alt="Perfil"></a></li>
-  </ul>
+      </div>
+      <div class="hamburger-menu" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Sobre</a></li>
+        <li><a href="contato.html">Contato</a></li>
+        <li><a href="login.html"><img class="img-2" src="IMG/perfil-de-usuario.png" alt="Perfil"></a></li>
+      </ul>
     </header>
-    <section id="main">
-      <div class="intro">
-        <h1>Bem-vindo ao Plateia</h1>
-        <br/>
-        <p>
-          A plataforma para te ajudar a melhorar suas habilidades de apresentação e fala em público. Participe de salas
-          de chat com pessoas de interesses similares e pratique falar em
-          público.
-        </p>
-      </div>
-      <div class="saiba-mais">
-        <button>Saiba Mais</button>
-      </div>
-    </section>
-    <br/>
-    <div class="carousel">
-      <div class="carousel-inner">
-          <div class="carousel-item active">
-              <img src="IMG/img-1.jfif" alt="Imagem 1">
-          </div>
-          <div class="carousel-item">
-              <img src="IMG/img-2.jfif" alt="Imagem 2">
-          </div>
-          <div class="carousel-item">
-              <img src="IMG/img-3.jfif" alt="Imagem 3">
-          </div>
-      </div>
-      <a class="carousel-control prev" onclick="moveCarousel(-1)">&#10094;</a>
-      <a class="carousel-control next" onclick="moveCarousel(1)">&#10095;</a>
-  </div>
-  <br/>
-  <br/>
-  <br/>
-    <section id="conteudo">
-      <div class="grid-item temas">
-        <h2>Temas Diversos</h2>
-        <p>
-          Escolha salas sobre temas de interesse mútuo e pratique com segurança.
-        </p>
-      </div>
-      <div class="grid-item ambiente">
-        <h2>Ambiente Controlado</h2>
-        <p >
-          Converse em grupos moderados e aprenda com o feedback de outros
-          participantes.
-        </p>
-    </div>
-      <div class="grid-item confiança">
-        <h2>Desenvolva Confiança</h2>
-        <p>
-          Ganhe autoconfiança e desenvolva suas habilidades de falar em público.
-        </p>
-      </div>
-    </section>
-  </ul>
-</header>
+
+    <main>
+      <section id="intro">
+        <h1>Bem-vindo à Plateia</h1>
+        <p>Pratique e melhore suas habilidades de oratória conosco!</p>
+      </section>
+    </main>
 
     <footer id="footer">
       <div class="footer-logos">
-        <div class="tooltip">
-          <a href="">
-          <img class="tooltipimg" src="IMG/icons8-whatsapp-48 (1).png" alt="">
-        </a>
-        <span class="tooltiptext">Whatsapp</span>
-      </div>
-        <div class="tooltip">
-          <a href="">
-          <img class="tooltipimg" src="IMG/icons8-instagram-48 (1).png" alt="">
-          <span class="tooltiptext">Instagram</span>
-        </a>
-      </div>
-       <div class="tooltip">
         <a href="">
-          <img class="tooltipimg" src="IMG/icons8-facebook-48.png" alt="">
-          <span class="tooltiptext">Facebook</span>
+          <img src="IMG/icons8-whatsapp-48 (1).png" alt="">
         </a>
-       </div>
-        <div class="tooltip">
-          <a href="">
-          <img class="tooltipimg" src="IMG/icons8-linkedin-48 (1).png" alt="">
-          <span class="tooltiptext">Linkedin</span>
+        <a href="">
+          <img src="IMG/icons8-instagram-48 (1).png" alt="">
         </a>
-        </div>
-        <div class="tooltip">
-          <a href="">
-          <img class="tooltipimg" src="IMG/icons8-github-48.png" alt="">
-          <span class="tooltiptext">Github</span>
+        <a href="">
+          <img src="IMG/icons8-facebook-48.png" alt="">
         </a>
-        </div>
+        <a href="">
+          <img src="IMG/icons8-linkedin-48 (1).png" alt="">
+        </a>
+        <a href="">
+          <img src="IMG/icons8-github-48.png" alt="">
+        </a>
       </div>
-      <div id="copy">
-        <p class="copyright">Copyright © 2024  <a id="link-copy" href="pages/about.html"> Plateia </a> - Todos os direitos reservados.</p>
-    </div>
+      <div> 
+        <p>&copy; 2024 Plateia. Todos os direitos reservados.</p>
+      </div>
     </footer>
+    <script src="assets/main.js"></script>
+    <script src="assets/auth.js"></script>
   </body>
-  <script src="assets/main.js"></script>
 </html>
