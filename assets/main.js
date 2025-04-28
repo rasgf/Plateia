@@ -1,11 +1,52 @@
-var currentIndex = 0;
-var totalItems = 0;
-var carouselItems = [];
-var carouselInner = null;
-var autoplayInterval;
-
-// Variáveis das citações
+let currentIndex = 0;
+let totalItems = 0;
+let carouselItems = [];
+let carouselInner = null;
+let autoplayInterval;
 let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+const localQuotes = [
+    {
+        id: "local-1",
+        text: "A arte é longa, a vida é breve.",
+        author: "Hipócrates"
+    },
+    {
+        id: "local-2",
+        text: "A arte diz o indizível.",
+        author: "Leonardo da Vinci"
+    },
+    {
+        id: "local-3",
+        text: "A arte é a mentira que nos permite conhecer a verdade.",
+        author: "Pablo Picasso"
+    },
+    {
+        id: "local-4",
+        text: "A arte é o espelho da sociedade.",
+        author: "Bertolt Brecht"
+    },
+    {
+        id: "local-5",
+        text: "A arte existe porque a vida não basta.",
+        author: "Ferreira Gullar"
+    },
+    {
+        id: "local-6",
+        text: "A arte é a expressão do mais profundo pensamento pelo caminho mais simples.",
+        author: "Albert Einstein"
+    },
+    {
+        id: "local-7",
+        text: "A arte é a mão direita da natureza.",
+        author: "Friedrich Schiller"
+    },
+    {
+        id: "local-8",
+        text: "A arte é o reflexo da alma no espelho da vida.",
+        author: "Machado de Assis"
+    }
+];
 
 function toggleMenu() {
     var navLinks = document.querySelector('.nav-links');
@@ -14,7 +55,6 @@ function toggleMenu() {
 
 window.moveCarousel = function(step) {
     currentIndex = (currentIndex + step + totalItems) % totalItems;
-    
     if (carouselInner) {
         carouselInner.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
     }
@@ -30,78 +70,141 @@ function stopAutoplay() {
     clearInterval(autoplayInterval);
 }
 
-// Funções das citações
-async function fetchQuote() {
+async function getRandomQuote() {
+    // API Simples: Advice Slip API (geralmente tem CORS aberto)
+    const apiUrl = 'https://api.adviceslip.com/advice';
+
     try {
-        const response = await fetch('https://api.quotable.io/random');
+        console.log('Tentando buscar da Advice Slip API...');
+        const response = await fetch(apiUrl, {
+            cache: "no-cache" // Evita que o navegador use cache antigo
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Erro ao buscar conselho: ${response.statusText}`);
+        }
+        
         const data = await response.json();
-        displayQuote(data);
+        
+        if (data && data.slip) {
+            console.log('Sucesso com Advice Slip API!');
+            return {
+                id: `advice-${data.slip.id}`, // Adiciona prefixo para evitar colisão com IDs locais
+                text: data.slip.advice,
+                author: "Conselho", // Esta API não fornece autor
+                timestamp: new Date().getTime()
+            };
+        } else {
+            throw new Error('Formato de resposta inválido da Advice Slip API');
+        }
     } catch (error) {
-        console.error('Erro ao buscar citação:', error);
-        alert('Erro ao buscar citação. Por favor, tente novamente.');
+        console.error('Falha ao buscar da Advice Slip API. Usando citação local.', error);
+        
+        // Fallback: Usar citações locais
+        const randomIndex = Math.floor(Math.random() * localQuotes.length);
+        return {
+            ...localQuotes[randomIndex],
+            timestamp: new Date().getTime()
+        };
     }
 }
 
-function displayQuote(quote) {
-    const quotesContainer = document.getElementById('quotes-container');
-    if (!quotesContainer) return;
-    
-    quotesContainer.innerHTML = `
-        <div class="quote-card">
-            <p class="quote-text">"${quote.content}"</p>
-            <p class="quote-author">- ${quote.author}</p>
-            <button class="favorite-btn" onclick="toggleFavorite(${JSON.stringify(quote)})" title="Favoritar">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" 
-                          stroke="#14213d" 
-                          fill="${isFavorite(quote) ? '#fca311' : 'none'}" 
-                          stroke-width="2"/>
-                </svg>
-            </button>
-        </div>
-    `;
+function isFavorite(quoteId) {
+    return favorites.some(fav => String(fav.id) === String(quoteId));
 }
 
 function toggleFavorite(quote) {
-    const index = favorites.findIndex(fav => fav._id === quote._id);
+    const quoteIdStr = String(quote.id);
+    const index = favorites.findIndex(fav => String(fav.id) === quoteIdStr);
+    
     if (index === -1) {
-        favorites.push(quote);
+        favorites.push({...quote, id: quoteIdStr});
     } else {
         favorites.splice(index, 1);
     }
+    
     localStorage.setItem('favorites', JSON.stringify(favorites));
-    displayQuote(quote);
+    renderQuote(quote); 
     renderFavorites();
 }
 
-function isFavorite(quote) {
-    return favorites.some(fav => fav._id === quote._id);
+function renderQuote(quote) {
+    const quoteElement = document.getElementById('quote-display');
+    if (!quoteElement) return;
+
+    quoteElement.innerHTML = `
+        <blockquote class="quote">
+            <p>${quote.text}</p>
+            <footer>
+                <span class="author">— ${quote.author}</span>
+                <button class="favorite-btn" onclick='toggleFavorite(${JSON.stringify(quote)})' title="${isFavorite(quote.id) ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" 
+                              stroke="#14213d" 
+                              fill="${isFavorite(quote.id) ? '#fca311' : 'none'}" 
+                              stroke-width="2"/>
+                    </svg>
+                </button>
+            </footer>
+        </blockquote>
+    `;
+}
+
+async function updateQuoteDisplay() {
+    const quoteElement = document.getElementById('quote-display');
+    if (!quoteElement) return;
+
+    quoteElement.innerHTML = `
+        <blockquote class="quote">
+            <p>Carregando conselho...</p>
+            <footer>
+                <span class="author">Aguarde um momento</span>
+            </footer>
+        </blockquote>
+    `;
+
+    const quote = await getRandomQuote();
+    renderQuote(quote);
+
+    quoteElement.classList.add('fade-in');
+    setTimeout(() => quoteElement.classList.remove('fade-in'), 500);
 }
 
 function renderFavorites() {
     const favoritesContainer = document.getElementById('favorites-container');
     if (!favoritesContainer) return;
     
-    favoritesContainer.innerHTML = favorites.map(quote => `
-        <div class="favorite-item">
-            <div class="favorite-content">
-                <p class="quote-text">"${quote.content}"</p>
-                <p class="quote-author">- ${quote.author}</p>
-            </div>
-            <button class="remove-btn" onclick="removeFromFavorites('${quote._id}')" title="Remover dos favoritos">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" 
-                          fill="#14213d"/>
-                </svg>
-            </button>
-        </div>
-    `).join('');
-}
+    if (favorites.length === 0) {
+        favoritesContainer.innerHTML = '<p class="no-favorites">Nenhuma citação/conselho favorito ainda.</p>';
+        return;
+    }
 
-function removeFromFavorites(quoteId) {
-    favorites = favorites.filter(quote => quote._id !== quoteId);
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-    renderFavorites();
+    favoritesContainer.innerHTML = favorites.map(quote => {
+        const quoteIdStr = String(quote.id);
+        const quoteForToggle = {...quote, id: quoteIdStr};
+
+        return `
+        <div class="favorite-quote">
+            <div class="quote"> 
+                <p>${quote.text}</p>
+                <footer>
+                    <span class="author">— ${quote.author}</span>
+                    </footer>
+                <button 
+                    class="favorite-btn remove-fav-btn" 
+                    onclick='toggleFavorite(${JSON.stringify(quoteForToggle).replace(/"/g, "&quot;")})' 
+                    title="Remover dos favoritos"
+                    aria-label="Remover dos favoritos"
+                >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#fca311" xmlns="http://www.w3.org/2000/svg">
+                         <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" 
+                              stroke="#14213d" 
+                              stroke-width="2"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    `}).join('');
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -134,7 +237,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         carousel.addEventListener('mouseover', stopAutoplay);
         carousel.addEventListener('mouseout', startAutoplay);
-
         startAutoplay();
     }
     
@@ -143,101 +245,14 @@ document.addEventListener('DOMContentLoaded', function() {
         hamburgerMenu.addEventListener('click', toggleMenu);
     }
 
-    // Inicialização das citações
+    updateQuoteDisplay();
+    renderFavorites();
+
     const newQuoteBtn = document.getElementById('new-quote');
     if (newQuoteBtn) {
-        newQuoteBtn.addEventListener('click', fetchQuote);
-        fetchQuote(); // Buscar primeira citação
+        newQuoteBtn.addEventListener('click', updateQuoteDisplay);
     }
-    renderFavorites();
 });
 
-// Verifica se o usuário está logado ao carregar a página
-window.onload = function() {
-    var usuarioLogado = localStorage.getItem('usuario');
-    if (usuarioLogado) {
-        var usuario = JSON.parse(usuarioLogado);
-        mostrarInfoUsuario(usuario);
-    }
-};
-
-// Alterna entre os formulários de login e cadastro
-function toggleFormulario() {
-    var loginForm = document.getElementById('login-form');
-    var cadastroForm = document.getElementById('cadastro-form');
-    
-    if (loginForm.style.display === 'none') {
-        loginForm.style.display = 'flex';
-        cadastroForm.style.display = 'none';
-    } else {
-        loginForm.style.display = 'none';
-        cadastroForm.style.display = 'flex';
-    }
-}
-
-// Tenta fazer login com as credenciais fornecidas
-function tentarLogin() {
-    var email = document.getElementById('email').value;
-    var senha = document.getElementById('senha').value;
-    
-    if (!email || !senha) {
-        alert('Por favor, preencha todos os campos.');
-        return;
-    }
-    
-    var usuario = fazerLogin(email, senha);
-    
-    if (usuario) {
-        mostrarInfoUsuario(usuario);
-    } else {
-        alert('Usuário não encontrado ou senha incorreta. Por favor, tente novamente.');
-    }
-}
-
-// Tenta cadastrar um novo usuário
-function tentarCadastro() {
-    var nome = document.getElementById('cadastro-nome').value;
-    var email = document.getElementById('cadastro-email').value;
-    var senha = document.getElementById('cadastro-senha').value;
-    var confirmarSenha = document.getElementById('cadastro-confirmar-senha').value;
-    
-    if (!nome || !email || !senha || !confirmarSenha) {
-        alert('Por favor, preencha todos os campos.');
-        return;
-    }
-    
-    if (senha !== confirmarSenha) {
-        alert('As senhas não coincidem.');
-        return;
-    }
-    
-    var resultado = cadastrarUsuario(nome, email, senha);
-    
-    if (resultado.sucesso) {
-        alert(resultado.mensagem);
-        document.getElementById('cadastro-nome').value = '';
-        document.getElementById('cadastro-email').value = '';
-        document.getElementById('cadastro-senha').value = '';
-        document.getElementById('cadastro-confirmar-senha').value = '';
-        toggleFormulario();
-    } else {
-        alert(resultado.mensagem);
-    }
-}
-
-// Mostra as informações do usuário logado
-function mostrarInfoUsuario(usuario) {
-    document.getElementById('login-form').style.display = 'none';
-    document.getElementById('cadastro-form').style.display = 'none';
-    document.getElementById('user-info').style.display = 'block';
-    document.getElementById('nome-usuario').textContent = usuario.nome;
-}
-
-// Faz logout do usuário
-function fazerLogout() {
-    localStorage.removeItem('usuario');
-    document.getElementById('login-form').style.display = 'flex';
-    document.getElementById('user-info').style.display = 'none';
-    document.getElementById('email').value = '';
-    document.getElementById('senha').value = '';
+function fazerLogin(email, senha) {
 }
