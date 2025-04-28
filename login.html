@@ -4,122 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - Plateia</title>
-    <link rel="stylesheet" href="CSS/style.css" />
     <link rel="stylesheet" href="CSS/reset.css" />
+    <link rel="stylesheet" href="CSS/style.css" />
     <link rel="stylesheet" href="CSS/responsive.css">
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            margin: 0;
-        }
-        
-        #login {
-            padding: 50px;
-            background-color: #e0f7fa;
-            text-align: center;
-            flex: 1;
-        }
-        
-        #login h2 {
-            padding: 20px;
-            color: #14213d;
-        }
-        
-        #login-form, #cadastro-form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-width: 400px;
-            margin: 0 auto;
-        }
-        
-        #cadastro-form {
-            display: none;
-        }
-        
-        #login input, #login textarea {
-            padding: 10px;
-            border: 1px solid #999999;
-            border-radius: 5px;
-            background-color: #f0f8ff;
-            color: #333;
-        }
-        
-        #login label {
-            color: #14213d;
-            text-align: left;
-            display: block;
-            margin-bottom: 5px;
-        }
-        
-        .login-btn, .cadastro-btn {
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-        
-        .login-btn {
-            background-color: #4CAF50;
-            color: white;
-        }
-        
-        .cadastro-btn {
-            background-color: #2196F3;
-            color: white;
-        }
-        
-        .login-btn:hover {
-            background-color: #45a049;
-        }
-        
-        .cadastro-btn:hover {
-            background-color: #0b7dda;
-        }
-        
-        .toggle-form {
-            text-align: center;
-            margin-top: 15px;
-            color: #14213d;
-            cursor: pointer;
-        }
-        
-        .toggle-form:hover {
-            text-decoration: underline;
-        }
-        
-        .user-info {
-            display: none;
-            text-align: center;
-            margin-top: 20px;
-            background-color: #f0f8ff;
-            padding: 20px;
-            border-radius: 5px;
-            max-width: 400px;
-            margin: 0 auto;
-        }
-        
-        .user-info h3 {
-            color: #14213d;
-            margin-bottom: 15px;
-        }
-        
-        .logout-btn {
-            background-color: #f44336;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        
-        .logout-btn:hover {
-            background-color: #d32f2f;
-        }
-    </style>
 </head>
 <body>
     <header id="header-menu">
@@ -129,17 +16,21 @@
             </a>
             <span class="tooltiptext">Criada pelo Vitinho</span>
         </div>
-        <div class="hamburger-menu" onclick="toggleMenu()">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="#">Sobre</a></li>
-            <li><a href="contato.html">Contato</a></li>
-            <li><a href="login.html"><img class="img-2" src="IMG/perfil-de-usuario.png" alt="Perfil"></a></li>
-        </ul>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="contato.html">Contato</a></li>
+                <li><a href="login.html" class="profile-link">
+                    <img class="img-2" src="IMG/perfil-de-usuario.png" alt="Perfil">
+                </a></li>
+            </ul>
+            <div class="hamburger-menu" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </nav>
     </header>
 
     <section id="login">
@@ -151,9 +42,7 @@
             <label for="senha">Senha:</label>
             <input type="password" id="senha" name="senha" required>
             
-            <div class="button">
-                <button class="login-btn" onclick="tentarLogin()">Entrar</button>
-            </div>
+            <button class="login-btn" onclick="tentarLogin()">Entrar</button>
             
             <p class="toggle-form" onclick="toggleFormulario()">Não tem uma conta? Cadastre-se</p>
         </div>
@@ -171,9 +60,7 @@
             <label for="cadastro-confirmar-senha">Confirmar Senha:</label>
             <input type="password" id="cadastro-confirmar-senha" name="confirmar-senha" required>
             
-            <div class="button">
-                <button class="cadastro-btn" onclick="tentarCadastro()">Cadastrar</button>
-            </div>
+            <button class="cadastro-btn" onclick="tentarCadastro()">Cadastrar</button>
             
             <p class="toggle-form" onclick="toggleFormulario()">Já tem uma conta? Faça login</p>
         </div>
@@ -187,116 +74,27 @@
     <footer id="footer">
         <div class="footer-logos">
             <a href="">
-                <img src="IMG/icons8-whatsapp-48 (1).png" alt="">
+                <img src="IMG/icons8-whatsapp-48 (1).png" alt="WhatsApp">
             </a>
             <a href="">
-                <img src="IMG/icons8-instagram-48 (1).png" alt="">
+                <img src="IMG/icons8-instagram-48 (1).png" alt="Instagram">
             </a>
             <a href="">
-                <img src="IMG/icons8-facebook-48.png" alt="">
+                <img src="IMG/icons8-facebook-48.png" alt="Facebook">
             </a>
             <a href="">
-                <img src="IMG/icons8-linkedin-48 (1).png" alt="">
+                <img src="IMG/icons8-linkedin-48 (1).png" alt="LinkedIn">
             </a>
             <a href="">
-                <img src="IMG/icons8-github-48.png" alt="">
+                <img src="IMG/icons8-github-48.png" alt="GitHub">
             </a>
         </div>
-        <div> 
+        <div class="footer-copyright">
             <p>&copy; 2024 Plateia. Todos os direitos reservados.</p>
         </div>
     </footer>
 
     <script src="assets/auth.js"></script>
-    <script>
-        window.onload = function() {
-            var usuarioLogado = localStorage.getItem('usuario');
-            if (usuarioLogado) {
-                var usuario = JSON.parse(usuarioLogado);
-                mostrarInfoUsuario(usuario);
-            }
-        };
-
-        function toggleFormulario() {
-            var loginForm = document.getElementById('login-form');
-            var cadastroForm = document.getElementById('cadastro-form');
-            
-            if (loginForm.style.display === 'none') {
-                loginForm.style.display = 'flex';
-                cadastroForm.style.display = 'none';
-            } else {
-                loginForm.style.display = 'none';
-                cadastroForm.style.display = 'flex';
-            }
-        }
-
-        function tentarLogin() {
-            var email = document.getElementById('email').value;
-            var senha = document.getElementById('senha').value;
-            
-            if (!email || !senha) {
-                alert('Por favor, preencha todos os campos.');
-                return;
-            }
-            
-            var usuario = fazerLogin(email, senha);
-            
-            if (usuario) {
-                mostrarInfoUsuario(usuario);
-            } else {
-                alert('Usuário não encontrado ou senha incorreta. Por favor, tente novamente.');
-            }
-        }
-
-        function tentarCadastro() {
-            var nome = document.getElementById('cadastro-nome').value;
-            var email = document.getElementById('cadastro-email').value;
-            var senha = document.getElementById('cadastro-senha').value;
-            var confirmarSenha = document.getElementById('cadastro-confirmar-senha').value;
-            
-            if (!nome || !email || !senha || !confirmarSenha) {
-                alert('Por favor, preencha todos os campos.');
-                return;
-            }
-            
-            if (senha !== confirmarSenha) {
-                alert('As senhas não coincidem.');
-                return;
-            }
-            
-            var resultado = cadastrarUsuario(nome, email, senha);
-            
-            if (resultado.sucesso) {
-                alert(resultado.mensagem);
-                document.getElementById('cadastro-nome').value = '';
-                document.getElementById('cadastro-email').value = '';
-                document.getElementById('cadastro-senha').value = '';
-                document.getElementById('cadastro-confirmar-senha').value = '';
-                toggleFormulario();
-            } else {
-                alert(resultado.mensagem);
-            }
-        }
-
-        function mostrarInfoUsuario(usuario) {
-            document.getElementById('login-form').style.display = 'none';
-            document.getElementById('cadastro-form').style.display = 'none';
-            document.getElementById('user-info').style.display = 'block';
-            document.getElementById('nome-usuario').textContent = usuario.nome;
-        }
-
-        function fazerLogout() {
-            localStorage.removeItem('usuario');
-            document.getElementById('login-form').style.display = 'flex';
-            document.getElementById('user-info').style.display = 'none';
-            document.getElementById('email').value = '';
-            document.getElementById('senha').value = '';
-        }
-
-        function toggleMenu() {
-            var navLinks = document.querySelector('.nav-links');
-            navLinks.classList.toggle('active');
-        }
-    </script>
+    <script src="assets/main.js"></script>
 </body>
 </html> 
